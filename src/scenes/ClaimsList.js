@@ -20,36 +20,49 @@ export default class ClaimsList extends Component {
     loaded: false,
   };
 
-  fillList() {
+  _fillList() {
     this.setState({ 
       dataSource: this.state.dataSource.cloneWithRows(MOCK_DATA),
       loaded: true, 
     });
   }
 
-  renderClaim(claim) {
+  _takeClaim = (claim) => {
+    console.log(claim);
+  };
+
+  _renderClaim = (claim) => {
     return (
       <Card style={styles.container}>
         <Card.Body>
           <Text>Откуда: {claim.sourceAddress}</Text>
           <Text>Куда: {claim.destinationAddress}</Text>
-          <Text>Что доставлять: 
-          {claim.subject}</Text>
+          <Text>Что доставлять: {claim.subject}</Text>
         </Card.Body>
+        <Card.Actions position="right">
+          <Button value="Взять заявку" onPress={() => this._takeClaim(claim) } />
+        </Card.Actions>
       </Card>
     );
-  }
+  };
 
   render () {
+    let loadButton = <Text />;
+
+    if (!this.state.loaded) {
+      loadButton = (
+        <Button
+          value="Загрузить заявки"
+          onPress={this._fillList.bind(this)} 
+        />);
+    }
+
     return (
       <View>
-        <Button 
-          value="Загрузить заявки"
-          onPress={this.fillList.bind(this)} 
-        />
+        { loadButton }
         <ListView 
           dataSource={this.state.dataSource}
-          renderRow={this.renderClaim}
+          renderRow={this._renderClaim}
           style={styles.listView} 
         />
       </View>
@@ -59,10 +72,5 @@ export default class ClaimsList extends Component {
 
 var styles = StyleSheet.create({
   container: {
-   //flex: 1,
-   //flexDirection: 'row',
-   //justifyContent: 'center',
-   //alignItems: 'center',
-   //backgroundColor: '#F5FCFF'
   }
 });

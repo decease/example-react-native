@@ -1,6 +1,6 @@
-import React, { Component, PropTypes, View, Text, Image } from 'react-native';
+import React, { Component, PropTypes } from 'react-native';
 
-import { Icon, Avatar, Drawer, Divider, COLOR, TYPO } from 'react-native-material-design';
+import { Drawer, Divider } from 'react-native-material-design';
 
 export default class Navigation extends Component {
 

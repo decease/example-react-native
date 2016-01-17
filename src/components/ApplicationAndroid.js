@@ -4,6 +4,8 @@ import Toolbar from './Toolbar';
 import Navigate from '../utils/Navigate';
 import Navigation from '../scenes/Navigation';
 
+import SignIn from '../scenes/SignIn';
+
 var routes = require('../routes');
 
 var {
@@ -76,7 +78,6 @@ export default class ApplicationAndroid extends Component {
               !this.state.navigator ? this.setNavigator(navigator) : null 
             }}
             renderScene={(route) => {
-              debugger
               if (this.state.navigator && route && route.component) {
                 return (
                   <ScrollView
