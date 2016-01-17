@@ -14,5 +14,10 @@ export default {
     claimsList: {
         title: 'Список заявок',
         component: require('./scenes/ClaimsList').default
+    },
+
+    help: {
+        title: 'Помощь',
+        component: require('./scenes/Help').default
     }
 }
