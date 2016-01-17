@@ -2,6 +2,9 @@ import React from 'react-native';
 import { Button } from 'react-native-material-design';
 import MOCK_CLAIMS from '../claims.data';
 
+import AuthStore from '../stores/AuthStore';
+import { API_URI } from '../utils/constants';
+
 const {
   Component,
   AppRegistry,
@@ -70,11 +73,36 @@ export default class ClaimsList extends Component {
     super(props);
   }
 
-  _onRefresh = () => { 
+  _onRefresh = () => {
+    //TODO: move to Store
+    const token = AuthStore.getState().token;
+
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(MOCK_DATA),
-      isRefreshing: false
+      isRefreshing: true
     });
+
+    fetch(API_URI + '/claims', {
+      headers: new Headers({
+        'Authorization': 'Bearer ' + token
+      })
+    })
+      .then((response) => response.json())
+      .then((responseJSON) => {
+        console.log('claims list received');
+        console.log(responseJSON);
+
+        if (responseJSON.message) {
+          console.warn(responseJSON.message);
+        } else {
+          this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(responseJSON),
+            isRefreshing: false
+          });
+        }
+      })
+      .catch((error) => {
+        console.warn(error);
+      });
   };
 
   _renderClaim(claim) {

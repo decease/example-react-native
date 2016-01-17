@@ -1,6 +1,7 @@
 import React from 'react-native';
 import { Icon, Button } from 'react-native-material-design';
-import AppStore from '../stores/AppStore';
+import AuthStore from '../stores/AuthStore';
+import AuthActions from '../actions/AuthActions';
 
 var {
   Component,
@@ -10,19 +11,22 @@ var {
   StyleSheet
 } = React;
 
-export default class NotLoginLabel extends Component {
+export default class SignIn extends Component {
   state = {
-    username: '',
-    password: ''
+    username: 'test@mailinator.com',
+    password: 'Test123$'
   };
 
   onSignIn () {
-    console.log(this.state);
+    AuthActions.signIn(this.state.username, this.state.password);
   }
 
   render () {
+    const username = AuthStore.getState().username;
+
     return (
       <View style={styles.container}>
+        <Text>UserName: {username}</Text>
         <View style={styles.inputs}>
           <View style={styles.inputContainer}>
             <Icon name={'face'} />
@@ -49,7 +53,7 @@ export default class NotLoginLabel extends Component {
             />
           </View>
           <View style={styles.signin}>
-            <Button 
+            <Button
               onPress={this.onSignIn.bind(this)}
               value={'Войти'}
             />

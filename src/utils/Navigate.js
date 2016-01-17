@@ -20,8 +20,6 @@ export default class Navigate {
 	 * @returns {{path: *}}
 	 */
 	static getInitialRoute = (path, customRoutes) => {
-		console.log('inside getInitialRoute', routes);
-
 		if (customRoutes) {
 			routes = customRoutes;
 		}
